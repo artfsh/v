@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>播放器</title>
+		
+		<style type="text/css">
+			#help{
+				font-size:36px;
+				color: #FD605B;
+				font-weight: bold;
+				
+				position:fixed;
+				left:50vw;
+				top:12px;
+				margin-left:-650px;
+			}
+			input{
+				height: 60px;
+				width: 1200px;
+				border:2px solid #9851F9;
+				box-sizing: border-box;
+				background-color: rgba(0,0,0,0);
+				border-radius: 10px;
+				outline: none;/* 取消选中时边框 */
+				
+				font-size:24px;
+				color: #CCA8FC;
+				text-indent:24px;
+				
+				position:fixed;
+				left:50vw;
+				top:10px;
+				margin-left:-600px;
+			}
+			#add{
+				height: 60px;
+				width: 240px;
+				border:0px solid #9851F9;
+				background-color: rgba(152,81,249,1);
+				border-radius: 10px;
+				border-top-left-radius: 0px;
+				border-bottom-left-radius: 0px;
+				
+				font-size:24px;
+				color: #ffffff;
+				
+				position:fixed;
+				left:50vw;
+				top:10px;
+				margin-left:360px;
+			}
+			.speed{
+				height: 60px;
+				width: 380px;
+				border:0px solid #000;
+				background-color: rgba(27,202,124,1);
+				border-radius: 10px;
+				
+				font-size:24px;
+				color: #ffffff;
+			}
+			#speed1{
+				position:fixed;
+				left:50vw;
+				top:80px;
+				margin-left:-600px;
+			}
+			#speed2{
+				position:fixed;
+				left:50vw;
+				top:80px;
+				margin-left:-190px;
+			}
+			#speed3{
+				position:fixed;
+				left:50vw;
+				top:80px;
+				margin-left:220px;
+			}
+			#full{
+				height: 60px;
+				width: 1200px;
+				border:0px solid #000;
+				background-color: rgba(26,183,250,1);
+				border-radius: 10px;
+				
+				font-size:24px;
+				color: #ffffff;
+				
+				position:fixed;
+				left:50vw;
+				top:150px;
+				margin-left:-600px;
+			}
+			#myvideo{
+				position:fixed;
+				left:50vw;
+				top:220px;
+				margin-left:-600px;
+			}
+			#changeSpeed{
+				height: 56px;
+				width: 60px;
+				border:2px solid #1BCA7C;
+				box-sizing: border-box;
+				background-color: rgba(29,205,127,1);
+				border-radius: 15px;
+				outline: none;/* 取消选中时边框 */
+				box-shadow: inset 1px 3px 4px rgb(13,112,68,50%),inset -1px -3px 4px rgb(114,244,186,50%);
+				
+				font-size:24px;
+				color: #FFFFFF;
+				text-indent:6px;
+				
+				position:fixed;
+				left:50vw;
+				top:82px;
+				margin-left:338px;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			// 点击播放按钮
+			function help(){
+				alert("1倍速快捷键：1\n1.2倍速快捷键：2\n自定义倍速快捷键:3\n全屏并播放/缩小并暂停快捷键：空格space\n导入+1.2倍速+全屏播放快捷键：v\n\n视频地址获取方法：视频页F12→Network→换手机UA→F5刷新→播放视频→双击Size最大的文件");
+			}
+			
+			function full(){
+				document.getElementById("myvideo").requestFullscreen();
+				myvideo.play();
+			}
+			
+			function speed1(){
+				myvideo.playbackRate=1;
+			}
+			function speed12(){
+				myvideo.playbackRate=1.2;
+			}
+			function speed3(){
+				var myspeed = document.getElementById("changeSpeed").value;//获取input框中文本，作为变量myspeed
+				myvideo.playbackRate=myspeed;
+			}
+			
+			function add(){
+				var address = document.getElementById("aaa").value;//获取input框中文本，作为变量address
+				document.getElementById('myvideo').src = address;//令视频地址变为address
+			}
+			
+
+			    window.onload=function () {
+					 var i = 1;
+			          window.onkeypress=function (e) {
+						if (e.key=='1'){
+							myvideo.playbackRate=1;
+						}
+						if (e.key=='2'){
+							myvideo.playbackRate=1.2;
+						}
+						if (e.key=='3'){
+							var myspeed = document.getElementById("changeSpeed").value;//获取input框中文本，作为变量myspeed
+							myvideo.playbackRate=myspeed;
+						}
+						if (e.key==' '){
+							if(i<0){
+							document.getElementById("myvideo").webkitExitFullscreen();
+							myvideo.pause();
+							i=i+2;
+							}else{
+							document.getElementById("myvideo").requestFullscreen();
+							myvideo.play();
+							i=i-2;
+							}
+			            }
+						if (e.key=='v'){
+							i=-1;
+							var address = document.getElementById("aaa").value;//获取input框中文本，作为变量address
+							document.getElementById('myvideo').src = address;//令视频地址变为address
+							myvideo.playbackRate=1.2;
+							document.getElementById("myvideo").requestFullscreen();
+							myvideo.play();
+						}
+						
+			          }
+				}
+			
+		</script>
+	</head>
+	<body>
+		<div id="help" onclick="help()">?</div>
+		<input type="text" name="aaa" id="aaa"/>
+		<button id="add" type="button" onclick="add()">导入视频</button>
+		<!-- <div id="add" onclick="add()">导入视频</div> -->
+		
+		<video id="myvideo" width="1200" height="">
+			<source src="" type="video/mp4"></source>
+		</video>
+		
+		
+		<p>
+		<button class="speed" id="speed1" onclick="speed1()" type="button">1倍速</button>
+		<button class="speed" id="speed2" onclick="speed12()" type="button">1.2倍速</button>
+		<button class="speed" id="speed3" onclick="speed3()" type="button">&nbsp;&nbsp;&nbsp;&nbsp;倍速</button>
+		<input type="text" name="changeSpeed" id="changeSpeed"/>
+		</p>
+		
+		
+		<p>
+		<button id="full" onclick="full()">全屏并播放</button>
+		</p>
+	</body>
+</html>
